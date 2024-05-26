@@ -2,9 +2,10 @@
 if (!require(httr)) install.packages("httr")
 if (!require(jsonlite)) install.packages("jsonlite")
 
-# Load the packages
+# Load necessary libraries
 library(httr)
 library(jsonlite)
+library(dplyr)
 
 base_url <- "https://public.totalglobalsports.com"
 
@@ -49,7 +50,7 @@ get_all_countries <- function() {
   return(data)
 }
 
-get_current_orgs_list <- function() {
+get_current_orgs_list <- function(ecnlOnly = FALSE) {
   # Define the URL
   url <- "https://public.totalglobalsports.com/api/Association/get-current-orgs-list"
 
@@ -63,6 +64,14 @@ get_current_orgs_list <- function() {
 
   # Parse the JSON response
   data <- fromJSON(content(response, "text"))
+
+  # Parse the JSON response
+  data <- fromJSON(content(response, "text"))
+
+  # Filter data if ecnlOnly is TRUE
+  if (ecnlOnly) {
+    data <- data %>% filter(grepl("ECNL", orgName, ignore.case = TRUE))
+  }
 
   # Return the data
   return(data)
