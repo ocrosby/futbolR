@@ -7,4 +7,8 @@ tgs_prefix <- "https://public.totalglobalsports.com"
 
 get_organizations <- function(ecnlOnly) {
   output <- jsonlinte::fromJSON()
+
+  return(output)
 }
+
+
