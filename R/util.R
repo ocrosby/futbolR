@@ -13,12 +13,24 @@ read_nwsl_data <- function(url) {
     ),
     error = function(err) {
       msg <- err$message
-      if (stringr::str_detect(msg, "HTTP error 404") & stringr::str_detect(url, "player_match_summaries|team_match_summaries")) {
-        stop("Error: File for given URL does not exist. HINT: While this match ID is correct, not all matches have data.")
+      pattern1 <- "HTTP error 404"
+      pattern2 <- "player_match_summaries|team_match_summaries"
+
+      if (stringr::str_detect(msg, pattern1) &
+            stringr::str_detect(url, pattern2)) {
+        error <- paste0("Error: File for given URL does not exist. ",
+                        "HINT: While this match ID is correct, ",
+                        "not all matches have data.")
+        stop(error)
       }
 
-      if(stringr::str_detect(msg, "HTTP error 404") & stringr::str_detect(url, "player_season_summaries|team_season_summaries")){
-        stop("Error: File for given URL does not exist. HINT: Did the team play in the season requested?")
+      pattern1 <- "HTTP error 404"
+      pattern2 <- "player_season_summaries|team_season_summaries"
+      if (stringr::str_detect(msg, pattern1) &
+            stringr::str_detect(url, pattern2)) {
+        error <- paste0("Error: File for given URL does not exist. ",
+                        "HINT: Did the team play in the season requested?")
+        stop(error)
       }
     }
   )
