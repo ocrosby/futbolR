@@ -63,6 +63,10 @@ print(reticulate::py_config())
 You should now see the version of python you specified.
 
 
+Installing the development packages you need
 
+```r
+install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
+```
 
 
